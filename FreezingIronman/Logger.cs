@@ -6,7 +6,21 @@ using System.Threading.Tasks;
 
 namespace FreezingIronman
 {
-    class Logger
+    static public class Logger
     {
+        public static void Log(string message)
+        {
+
+        }
+
+        public static void LogVideo()
+        {
+
+        }
+
+        public static void EncodingFinished()
+        {
+
+        }
     }
 }

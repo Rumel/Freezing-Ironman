@@ -15,11 +15,17 @@ namespace FreezingIronman
         {
             settings = new Settings();
             videos = FindVideos();
+            EncodeVideos();
         }
 
         static List<Video> FindVideos()
         {
             return null;
+        }
+
+        static void EncodeVideos()
+        {
+
         }
     }
 }
