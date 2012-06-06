@@ -1,1 +1,27 @@
-﻿
+﻿# This is the settings file for FreezingIronman
+# Lines beginning with '#' symbols are comments
+
+# Location of HandBrakeCLI.exe
+# Most likely is C:\Program Files\Handbrake\HandBrakeCLI.exe
+HandBrakeLocation=
+# Directory to look for input files
+InputDirectory=
+# Directory to output those files
+OutputDirectory=
+# Preset to use with Handbrake if none is specified Normal will be used
+Preset=
+# Location of logfile if you would like one to be kept (optional)
+Logfile=
+# This determines whether to loop over the files after converting to see if
+# any new ones have been added to the directory. true or false, false by default.
+Loop=
+# This option will convert the smaller files first if set to true, false by default
+Optimize=
+# Will scan recursively in the input directory for video files
+# and convert them. false by default
+Recursive=
+# List of extensions that are video files seperated by a space
+# ex. Extensions=.mp4 .m4v .mkv .mpg
+Extensions=
+# Extension that will be applied on output. mkv or m4v, m4v by default.
+OutputExt=

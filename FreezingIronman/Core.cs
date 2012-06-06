@@ -9,13 +9,23 @@ namespace FreezingIronman
 {
     class Core
     {
-        public static Settings settings;
+        public static Settings Settings;
         static List<Video> videos;
-        static List<string> Candidates;
+        static List<FileInfo> Candidates = new List<FileInfo>();
 
         static void Main(string[] args)
         {
-            settings = new Settings();
+            Settings = new Settings();
+            
+            //Find possible video candidates
+            if (Settings.Recursive)
+            {
+                FindCandidatesRecursively(new DirectoryInfo(Settings.InputDirectory));
+            }
+            else
+            {
+                FindCandidates(new DirectoryInfo(Settings.InputDirectory));
+            }
             videos = FindVideos();
             EncodeVideos();
         }
@@ -25,14 +35,30 @@ namespace FreezingIronman
             return null;
         }
 
-        static void FindCandidatesRecursively()
+        static void FindCandidatesRecursively(DirectoryInfo dir)
         {
-            return;
+            foreach (var d in dir.GetDirectories())
+            {
+                FindCandidatesRecursively(d);
+                foreach (var f in d.GetFiles())
+                {
+                    if (IsVideoFile(f))
+                    {
+                        Candidates.Add(f);
+                    }
+                }
+            }
         }
 
-        static void FindCandidates()
+        static void FindCandidates(DirectoryInfo dir)
         {
-            return;
+            foreach (var f in dir.GetFiles())
+            {
+                if (IsVideoFile(f))
+                {
+                    Candidates.Add(f);
+                }
+            }
         }
 
         static void EncodeVideos()
@@ -40,12 +66,11 @@ namespace FreezingIronman
 
         }
 
-        static bool IsVideoFile(string filename)
+        static bool IsVideoFile(FileInfo f)
         {
-            var x = new FileInfo(filename);
-            foreach (var ext in settings.Extensions)
+            foreach (var ext in Settings.Extensions)
             {
-                if (x.Extension == ext)
+                if (f.Extension == ext)
                 {
                     return true;
                 }
