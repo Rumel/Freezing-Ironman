@@ -7,56 +7,55 @@ using System.IO;
 
 namespace FreezingIronman
 {
-    class Core
+    public static class Core
     {
-        public static Settings Settings;
-        static List<Video> videos;
-        static List<FileInfo> Candidates = new List<FileInfo>();
+        public static Settings settings;
+        static List<Video> videos = new List<Video>();
 
         static void Main(string[] args)
         {
-            Settings = new Settings();
+            settings = new Settings();
             
             //Find possible video candidates
-            if (Settings.Recursive)
+            if (settings.Recursive)
             {
-                FindCandidatesRecursively(new DirectoryInfo(Settings.InputDirectory));
+                FindVideosRecursively(new DirectoryInfo(settings.InputDirectory));
             }
             else
             {
-                FindCandidates(new DirectoryInfo(Settings.InputDirectory));
+                FindVideos(new DirectoryInfo(settings.InputDirectory));
             }
-            videos = FindVideos();
+
+            foreach (var v in videos)
+            {
+                Console.WriteLine("{0}\n{1}\n\n", v.Info.FullName, v.FullOutputName);
+            }
             EncodeVideos();
+            Console.ReadLine();
         }
 
-        static List<Video> FindVideos()
-        {
-            return null;
-        }
-
-        static void FindCandidatesRecursively(DirectoryInfo dir)
+        static void FindVideosRecursively(DirectoryInfo dir)
         {
             foreach (var d in dir.GetDirectories())
             {
-                FindCandidatesRecursively(d);
+                FindVideosRecursively(d);
                 foreach (var f in d.GetFiles())
                 {
                     if (IsVideoFile(f))
                     {
-                        Candidates.Add(f);
+                        videos.Add(new Video(f));
                     }
                 }
             }
         }
 
-        static void FindCandidates(DirectoryInfo dir)
+        static void FindVideos(DirectoryInfo dir)
         {
             foreach (var f in dir.GetFiles())
             {
                 if (IsVideoFile(f))
                 {
-                    Candidates.Add(f);
+                    videos.Add(new Video(f));
                 }
             }
         }
@@ -68,7 +67,7 @@ namespace FreezingIronman
 
         static bool IsVideoFile(FileInfo f)
         {
-            foreach (var ext in Settings.Extensions)
+            foreach (var ext in settings.Extensions)
             {
                 if (f.Extension == ext)
                 {
