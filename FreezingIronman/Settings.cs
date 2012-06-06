@@ -8,6 +8,7 @@ namespace FreezingIronman
 {
     public class Settings
     {
+        //Should have default
         private string _preset;
         public string Preset
         {
@@ -17,6 +18,7 @@ namespace FreezingIronman
             }
         }
 
+        //Should have default
         private string _logfile;
         public string Logfile
         {
@@ -26,6 +28,7 @@ namespace FreezingIronman
             }
         }
 
+        //Necessary
         private string _inputDirectory;
         public string InputDirectory
         {
@@ -35,6 +38,7 @@ namespace FreezingIronman
             }
         }
 
+        //Necessary
         private string _outputDirectory;
         public string OutputDirectory
         {
@@ -44,7 +48,8 @@ namespace FreezingIronman
             }
         }
 
-        private bool _loop;
+        //Defaults to false
+        private bool _loop = false;
         public bool Loop
         {
             get
@@ -53,7 +58,8 @@ namespace FreezingIronman
             }
         }
 
-        private bool _optimize;
+        //Defaults to false
+        private bool _optimize = false;
         public bool Optimize
         {
             get
@@ -62,6 +68,35 @@ namespace FreezingIronman
             }
         }
 
+        //Defaults to false
+        private bool _recursive = false;
+        public bool Recursive
+        {
+            get
+            {
+                return _recursive;
+            }
+        }
+
+        //Necessary
+        private string[] _extensions;
+        public string[] Extensions
+        {
+            get
+            {
+                return _extensions;
+            }
+        }
+
+        //Necessary
+        private string _handBrakeLocation;
+        public string HandBrakeLocation
+        {
+            get
+            {
+                return _handBrakeLocation;
+            }
+        }
 
         public Settings()
         {
