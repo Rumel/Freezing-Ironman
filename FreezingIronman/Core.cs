@@ -28,7 +28,7 @@ namespace FreezingIronman
 
             foreach (var v in videos)
             {
-                Console.WriteLine("{0}\n{1}\n\n", v.Info.FullName, v.FullOutputName);
+                Console.WriteLine("{0}\n{1}\n\n", v.InputPath, v.FullOutputName);
             }
             EncodeVideos();
             Console.ReadLine();

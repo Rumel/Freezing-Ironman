@@ -10,19 +10,75 @@ namespace FreezingIronman
     public class Video
     {
         private FileInfo _info;
-        public FileInfo Info
+
+        public string InputPath
         {
             get
             {
-                return _info;
+                return this._info.FullName;
             }
+        }
+
+        public long InputSize
+        {
+            get
+            {
+                if (File.Exists(this.InputPath))
+                {
+                    return this._info.Length;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
+
+        public string InputSizeHuman
+        {
+            get
+            {
+                return this.HumanReadeable(this.InputSize);
+            }
+        }
+
+        public long OutputSize
+        {
+            get
+            {
+                if (File.Exists(this.OutputPath))
+                {
+                    return new FileInfo(this.OutputPath).Length;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
+
+        public string OutputSizeHuman
+        {
+            get
+            {
+                return this.HumanReadeable(this.OutputSize);
+            }
+        }
+
+        private string HumanReadeable(long bytes)
+        {
+            string[] suf = { "B", "KB", "MB", "GB", "TB", "PB" };
+            int place = Convert.ToInt32(Math.Floor(Math.Log(bytes, 1024)));
+            double num = Math.Round(bytes / Math.Pow(1024, place), 1);
+            string readable = num.ToString() + suf[place];
+            return readable;
         }
 
         public string OutputPath
         {
             get
             {
-                return Info.DirectoryName.ToString().Replace(Core.settings.InputDirectory, Core.settings.OutputDirectory);
+                return this._info.DirectoryName.ToString().Replace(Core.settings.InputDirectory, Core.settings.OutputDirectory);
             }
         }
 
@@ -30,13 +86,13 @@ namespace FreezingIronman
         {
             get
             {
-                return String.Format("{0}\\{1}", this.OutputPath, this.Info.Name.Replace(this.Info.Extension, Core.settings.OutputExt));
+                return String.Format("{0}\\{1}", this.OutputPath, this._info.Name.Replace(this._info.Extension, Core.settings.OutputExt));
             }
         }
 
         public bool AlreadyConverted()
         {
-            if (File.Exists(FullOutputName))
+            if (File.Exists(this.FullOutputName))
             {
                 return true;
             }
