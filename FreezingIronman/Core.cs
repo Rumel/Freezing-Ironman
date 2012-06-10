@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Diagnostics;
 
 namespace FreezingIronman
 {
@@ -20,15 +21,11 @@ namespace FreezingIronman
             if (settings.Recursive)
             {
                 FindVideosRecursively(new DirectoryInfo(settings.InputDirectory));
+                FindVideos(new DirectoryInfo(settings.InputDirectory));
             }
             else
             {
                 FindVideos(new DirectoryInfo(settings.InputDirectory));
-            }
-
-            foreach (var v in videos)
-            {
-                Console.WriteLine("{0}\n{1}\n\n", v.InputPath, v.FullOutputName);
             }
             EncodeVideos();
             Console.ReadLine();
@@ -62,7 +59,50 @@ namespace FreezingIronman
 
         static void EncodeVideos()
         {
+            var continueConverting = true;
 
+            while (continueConverting)
+            {
+                var converted = 0;
+                if (settings.Optimize == true)
+                {
+                    videos = videos.OrderBy(x => x.InputSize).ToList();
+                }
+
+                foreach (var v in videos)
+                {
+                    if (!v.AlreadyConverted())
+                    {
+                        v.CreateOutputPath();
+                        var input = String.Format("-i \"{0}\" ", v.InputPath);
+                        var output = String.Format("-o \"{0}\" ", v.OutputPath);
+                        var preset = String.Format("-Z {0}", settings.Preset);
+                        var convertString = String.Format(" {0} {1} {2}", input, output, preset);
+                        //Converting is not working correctly yet.
+                        var p = new Process();
+                        p.StartInfo = new ProcessStartInfo(settings.HandBrakeLocation, convertString)
+                        {
+                            UseShellExecute = false,
+                        };
+                        p.Start();
+                        p.WaitForExit();
+                        converted++;
+                    }
+                }
+
+                if (settings.Loop == true)
+                {
+                    if (converted == 0)
+                    {
+                        continueConverting = false;
+                    }
+                    continueConverting = false;
+                }
+                else
+                {
+                    continueConverting = false;
+                }
+            }
         }
 
         static bool IsVideoFile(FileInfo f)

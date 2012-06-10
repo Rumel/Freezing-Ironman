@@ -82,6 +82,11 @@ namespace FreezingIronman
             }
         }
 
+        public void CreateOutputPath()
+        {
+            Directory.CreateDirectory(this.OutputPath);
+        }
+
         public string FullOutputName
         {
             get

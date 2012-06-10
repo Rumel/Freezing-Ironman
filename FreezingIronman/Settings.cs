@@ -15,7 +15,7 @@ namespace FreezingIronman
         {
             get
             {
-                return _preset;
+                return this._preset;
             }
         }
 
@@ -25,7 +25,7 @@ namespace FreezingIronman
         {
             get
             {
-                return _logfile;
+                return this._logfile;
             }
         }
 
@@ -35,7 +35,7 @@ namespace FreezingIronman
         {
             get
             {
-                return _inputDirectory;
+                return this._inputDirectory;
             }
         }
 
@@ -45,7 +45,7 @@ namespace FreezingIronman
         {
             get
             {
-                return _outputDirectory;
+                return this._outputDirectory;
             }
         }
 
@@ -55,7 +55,7 @@ namespace FreezingIronman
         {
             get
             {
-                return _loop;
+                return this._loop;
             }
         }
 
@@ -65,7 +65,7 @@ namespace FreezingIronman
         {
             get
             {
-                return _optimize;
+                return this._optimize;
             }
         }
 
@@ -75,7 +75,7 @@ namespace FreezingIronman
         {
             get
             {
-                return _recursive;
+                return this._recursive;
             }
         }
 
@@ -85,7 +85,7 @@ namespace FreezingIronman
         {
             get
             {
-                return _extensions;
+                return this._extensions;
             }
         }
 
@@ -95,7 +95,7 @@ namespace FreezingIronman
         {
             get
             {
-                return _handBrakeLocation;
+                return this._handBrakeLocation;
             }
         }
 
@@ -105,7 +105,7 @@ namespace FreezingIronman
         {
             get
             {
-                return _outputExt;
+                return this._outputExt;
             }
         }
 
@@ -124,7 +124,7 @@ namespace FreezingIronman
                                 case "HandBrakeLocation":
                                     if (li[1] != "")
                                     {
-                                        _handBrakeLocation = li[1];
+                                        this._handBrakeLocation = li[1];
                                     }
                                     else
                                     {
@@ -135,7 +135,7 @@ namespace FreezingIronman
                                 case "InputDirectory":
                                     if (li[1] != "")
                                     {
-                                        _inputDirectory = li[1];
+                                        this._inputDirectory = li[1];
                                     }
                                     else
                                     {
@@ -146,7 +146,7 @@ namespace FreezingIronman
                                 case "OutputDirectory":
                                     if (li[1] != "")
                                     {
-                                        _outputDirectory = li[1];
+                                        this._outputDirectory = li[1];
                                     }
                                     else
                                     {
@@ -157,37 +157,37 @@ namespace FreezingIronman
                                 case "Preset":
                                     if (li[1] != "")
                                     {
-                                        _preset = li[1];
+                                        this._preset = li[1];
                                     }
                                     break;
                                 case "Logfile":
                                     if (li[1] != "")
                                     {
-                                        _logfile = li[1];
+                                        this._logfile = li[1];
                                     }
                                     break;
                                 case "Loop":
                                     if (li[1].ToLower() == "true")
                                     {
-                                        _loop = true;
+                                        this._loop = true;
                                     }
                                     break;
                                 case "Optimize":
                                     if (li[1].ToLower() == "true")
                                     {
-                                        _loop = true;
+                                        this._loop = true;
                                     }
                                     break;
                                 case "Recursive":
                                     if (li[1].ToLower() == "true")
                                     {
-                                        _loop = true;
+                                        this._recursive = true;
                                     }
                                     break;
                                 case "Extensions":
                                     if (li[1] != "")
                                     {
-                                        _extensions = li[1].ToLower().Split(' ');
+                                        this._extensions = li[1].ToLower().Split(' ');
                                     }
                                     else
                                     {
@@ -198,7 +198,7 @@ namespace FreezingIronman
                                 case "OutputExt":
                                     if (li[1] != "")
                                     {
-                                        _outputExt = li[1];
+                                        this._outputExt = li[1];
                                     }
                                     break;
                                 default:
