@@ -96,7 +96,6 @@ namespace FreezingIronman
                     {
                         continueConverting = false;
                     }
-                    continueConverting = false;
                 }
                 else
                 {
