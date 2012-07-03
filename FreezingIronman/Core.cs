@@ -74,8 +74,8 @@ namespace FreezingIronman
                     if (!v.AlreadyConverted())
                     {
                         v.CreateOutputPath();
-                        var input = String.Format("-i \"{0}\" ", v.InputPath);
-                        var output = String.Format("-o \"{0}\" ", v.OutputPath);
+                        var input = String.Format("-i \"{0}\" ", v.InputFullName);
+                        var output = String.Format("-o \"{0}\" ", v.FullOutputName);
                         var preset = String.Format("-Z {0}", settings.Preset);
                         var convertString = String.Format(" {0} {1} {2}", input, output, preset);
                         //Converting is not working correctly yet.

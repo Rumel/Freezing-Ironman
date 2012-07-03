@@ -11,7 +11,7 @@ namespace FreezingIronman
     {
         private FileInfo _info;
 
-        public string InputPath
+        public string InputFullName
         {
             get
             {
@@ -23,7 +23,7 @@ namespace FreezingIronman
         {
             get
             {
-                if (File.Exists(this.InputPath))
+                if (File.Exists(this.InputFullName))
                 {
                     return this._info.Length;
                 }

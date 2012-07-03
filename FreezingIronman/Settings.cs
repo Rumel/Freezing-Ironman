@@ -10,7 +10,7 @@ namespace FreezingIronman
     public class Settings
     {
         //Should have default
-        private string _preset;
+        private string _preset = "Normal";
         public string Preset
         {
             get
@@ -129,7 +129,7 @@ namespace FreezingIronman
                                     else
                                     {
                                         Console.WriteLine("HandBrakeLocation setting not found");
-                                        Logger.Log("HandBrakeLocation setting not found");
+                                        Logger.Log("HandBrakeLocation setting not found", MessageType.General);
                                     }
                                     break;
                                 case "InputDirectory":
@@ -140,7 +140,7 @@ namespace FreezingIronman
                                     else
                                     {
                                         Console.WriteLine("InputDirectory setting not found");
-                                        Logger.Log("InputDirectory setting not found");
+                                        Logger.Log("InputDirectory setting not found", MessageType.General);
                                     }
                                     break;
                                 case "OutputDirectory":
@@ -151,7 +151,7 @@ namespace FreezingIronman
                                     else
                                     {
                                         Console.WriteLine("OutputDirectory setting not found");
-                                        Logger.Log("OutputDirectory setting not found");
+                                        Logger.Log("OutputDirectory setting not found", MessageType.General);
                                     }
                                     break;
                                 case "Preset":
@@ -175,7 +175,7 @@ namespace FreezingIronman
                                 case "Optimize":
                                     if (li[1].ToLower() == "true")
                                     {
-                                        this._loop = true;
+                                        this._optimize = true;
                                     }
                                     break;
                                 case "Recursive":
@@ -192,7 +192,7 @@ namespace FreezingIronman
                                     else
                                     {
                                         Console.WriteLine("Valid video extensions not found");
-                                        Logger.Log("Valid video extensions not found");
+                                        Logger.Log("Valid video extensions not found", MessageType.General);
                                     }
                                     break;
                                 case "OutputExt":
@@ -202,7 +202,7 @@ namespace FreezingIronman
                                     }
                                     break;
                                 default:
-                                    Logger.Log(String.Format("Invalid setting: {0}", l));
+                                    Logger.Log(String.Format("Invalid setting: {0}", l), MessageType.General);
                                     break;
                             }
                         }
@@ -212,7 +212,7 @@ namespace FreezingIronman
             }
             catch (FileNotFoundException)
             {
-                Logger.Log("Settings file was not found");
+                Logger.Log("Settings file was not found", MessageType.General);
                 Console.WriteLine("Settings file not found, the template will be created for you");
                 CreateSettingsFile();
             }
@@ -253,7 +253,7 @@ Recursive=
 Extensions=
 # Extension that will be applied on output. mkv or m4v, m4v by default.
 OutputExt=", Encoding.UTF8);
-            Logger.Log("Created Settings.txt template");
+            Logger.Log("Created Settings.txt template", MessageType.General);
         }
     }
 }
