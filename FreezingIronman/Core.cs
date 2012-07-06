@@ -15,6 +15,7 @@ namespace FreezingIronman
 
         static void Main(string[] args)
         {
+            Console.Title = "Freezing Ironman";
             settings = new Settings();
             
             //Find possible video candidates
@@ -60,10 +61,13 @@ namespace FreezingIronman
         static void EncodeVideos()
         {
             var continueConverting = true;
-
+            var totalConverted = 0;
             while (continueConverting)
             {
                 var converted = 0;
+                //Removes already converted videos from the list
+                videos = RemoveFinished(videos);
+                Console.Title = String.Format("Freezing Ironman {0}/{1}", totalConverted, videos.Count);
                 if (settings.Optimize == true)
                 {
                     videos = videos.OrderBy(x => x.InputSize).ToList();
@@ -73,12 +77,12 @@ namespace FreezingIronman
                 {
                     if (!v.AlreadyConverted())
                     {
+                        Console.Title = String.Format("Freezing Ironman {0}/{1}", converted, videos.Count);
                         v.CreateOutputPath();
                         var input = String.Format("-i \"{0}\" ", v.InputFullName);
                         var output = String.Format("-o \"{0}\" ", v.FullOutputName);
-                        var preset = String.Format("-Z {0}", settings.Preset);
+                        var preset = String.Format("-Z \"{0}\"", settings.Preset);
                         var convertString = String.Format(" {0} {1} {2}", input, output, preset);
-                        //Converting is not working correctly yet.
                         var p = new Process();
                         p.StartInfo = new ProcessStartInfo(settings.HandBrakeLocation, convertString)
                         {
@@ -86,7 +90,9 @@ namespace FreezingIronman
                         };
                         p.Start();
                         p.WaitForExit();
+                        Logger.LogVideo(p, v);
                         converted++;
+                        totalConverted++;
                     }
                 }
 
@@ -102,6 +108,7 @@ namespace FreezingIronman
                     continueConverting = false;
                 }
             }
+            Logger.EncodingFinished(totalConverted);
         }
 
         static bool IsVideoFile(FileInfo f)
@@ -114,6 +121,25 @@ namespace FreezingIronman
                 }
             }
             return false;
+        }
+
+        static List<Video> RemoveFinished(List<Video> vids)
+        {
+            List<Video> toRemove = new List<Video>();
+            foreach(var v in vids){
+                if (File.Exists(v.FullOutputName))
+                {
+                    toRemove.Add(v);
+                }
+            }
+
+            foreach (var v in toRemove)
+            {
+                vids.Remove(v);
+                Console.WriteLine("Removed {0}", v.InputFullName);
+            }
+
+            return vids;
         }
     }
 }
