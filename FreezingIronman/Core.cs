@@ -115,7 +115,7 @@ namespace FreezingIronman
         {
             foreach (var ext in settings.Extensions)
             {
-                if (f.Extension == ext)
+                if (f.Extension.ToLower() == ext.ToLower())
                 {
                     return true;
                 }
