@@ -2,5 +2,8 @@
 bin
 obj
 
+*.suo
+*.ncrunchsolution*
+
 # mstest test results
 TestResults
