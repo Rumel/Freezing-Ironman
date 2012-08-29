@@ -78,7 +78,6 @@ namespace FreezingIronman
                 {
                     if (!v.AlreadyConverted())
                     {
-                        Console.Title = String.Format("Freezing Ironman {0}/{1}", totalConverted, totalVideos);
                         v.CreateOutputPath();
                         var input = String.Format("-i \"{0}\" ", v.InputFullName);
                         var output = String.Format("-o \"{0}\" ", v.FullOutputName);
@@ -94,6 +93,7 @@ namespace FreezingIronman
                         Logger.LogVideo(p, v);
                         converted++;
                         totalConverted++;
+                        Console.Title = String.Format("Freezing Ironman {0}/{1}", totalConverted, totalVideos);
                     }
                 }
 
