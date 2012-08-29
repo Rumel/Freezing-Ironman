@@ -62,12 +62,13 @@ namespace FreezingIronman
         {
             var continueConverting = true;
             var totalConverted = 0;
+            var totalVideos = 0;
             while (continueConverting)
             {
                 var converted = 0;
                 //Removes already converted videos from the list
                 videos = RemoveFinished(videos);
-                Console.Title = String.Format("Freezing Ironman {0}/{1}", totalConverted, videos.Count);
+                totalVideos += videos.Count;
                 if (settings.Optimize == true)
                 {
                     videos = videos.OrderBy(x => x.InputSize).ToList();
@@ -77,7 +78,7 @@ namespace FreezingIronman
                 {
                     if (!v.AlreadyConverted())
                     {
-                        Console.Title = String.Format("Freezing Ironman {0}/{1}", converted, videos.Count);
+                        Console.Title = String.Format("Freezing Ironman {0}/{1}", totalConverted, totalVideos);
                         v.CreateOutputPath();
                         var input = String.Format("-i \"{0}\" ", v.InputFullName);
                         var output = String.Format("-o \"{0}\" ", v.FullOutputName);
