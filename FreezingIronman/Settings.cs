@@ -109,6 +109,16 @@ namespace FreezingIronman
             }
         }
 
+        //Extra Arguments
+        private string _extraArgs = "";
+        public string ExtraArgs
+        {
+            get
+            {
+                return this._extraArgs;
+            }
+        }
+
         public Settings()
         {
             try
@@ -118,93 +128,99 @@ namespace FreezingIronman
                 {
                     if (l.Length > 0 && l[0] != '#')
                     {
-                        var li = l.Split('=');
-                        if(li.Count() == 2){
-                            switch(li[0]){
-                                case "HandBrakeLocation":
-                                    if (li[1] != "")
-                                    {
-                                        this._handBrakeLocation = li[1];
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine("HandBrakeLocation setting not found");
-                                        Logger.Log("HandBrakeLocation setting not found", MessageType.General);
-                                    }
-                                    break;
-                                case "InputDirectory":
-                                    if (li[1] != "")
-                                    {
-                                        this._inputDirectory = li[1];
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine("InputDirectory setting not found");
-                                        Logger.Log("InputDirectory setting not found", MessageType.General);
-                                    }
-                                    break;
-                                case "OutputDirectory":
-                                    if (li[1] != "")
-                                    {
-                                        this._outputDirectory = li[1];
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine("OutputDirectory setting not found");
-                                        Logger.Log("OutputDirectory setting not found", MessageType.General);
-                                    }
-                                    break;
-                                case "Preset":
-                                    if (li[1] != "")
-                                    {
-                                        this._preset = li[1];
-                                    }
-                                    break;
-                                case "Logfile":
-                                    if (li[1] != "")
-                                    {
-                                        this._logfile = li[1];
-                                    }
-                                    break;
-                                case "Loop":
-                                    if (li[1].ToLower() == "true")
-                                    {
-                                        this._loop = true;
-                                    }
-                                    break;
-                                case "Optimize":
-                                    if (li[1].ToLower() == "true")
-                                    {
-                                        this._optimize = true;
-                                    }
-                                    break;
-                                case "Recursive":
-                                    if (li[1].ToLower() == "true")
-                                    {
-                                        this._recursive = true;
-                                    }
-                                    break;
-                                case "Extensions":
-                                    if (li[1] != "")
-                                    {
-                                        this._extensions = li[1].ToLower().Split(' ');
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine("Valid video extensions not found");
-                                        Logger.Log("Valid video extensions not found", MessageType.General);
-                                    }
-                                    break;
-                                case "OutputExt":
-                                    if (li[1] != "")
-                                    {
-                                        this._outputExt = li[1];
-                                    }
-                                    break;
-                                default:
-                                    Logger.Log(String.Format("Invalid setting: {0}", l), MessageType.General);
-                                    break;
-                            }
+                        var index = l.IndexOf("=");
+                        var argument = l.Substring(0,index);
+                        var data = l.Substring(index + 1);
+                        switch(argument){
+                            case "HandBrakeLocation":
+                                if (data != "")
+                                {
+                                    this._handBrakeLocation = data;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("HandBrakeLocation setting not found");
+                                    Logger.Log("HandBrakeLocation setting not found", MessageType.General);
+                                }
+                                break;
+                            case "InputDirectory":
+                                if (data!= "")
+                                {
+                                    this._inputDirectory = data;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("InputDirectory setting not found");
+                                    Logger.Log("InputDirectory setting not found", MessageType.General);
+                                }
+                                break;
+                            case "OutputDirectory":
+                                if (data != "")
+                                {
+                                    this._outputDirectory = data;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("OutputDirectory setting not found");
+                                    Logger.Log("OutputDirectory setting not found", MessageType.General);
+                                }
+                                break;
+                            case "Preset":
+                                if (data != "")
+                                {
+                                    this._preset = data;
+                                }
+                                break;
+                            case "Logfile":
+                                if (data != "")
+                                {
+                                    this._logfile = data;
+                                }
+                                break;
+                            case "Loop":
+                                if (data.ToLower() == "true")
+                                {
+                                    this._loop = true;
+                                }
+                                break;
+                            case "Optimize":
+                                if (data.ToLower() == "true")
+                                {
+                                    this._optimize = true;
+                                }
+                                break;
+                            case "Recursive":
+                                if (data.ToLower() == "true")
+                                {
+                                    this._recursive = true;
+                                }
+                                break;
+                            case "Extensions":
+                                if (data != "")
+                                {
+                                    this._extensions = data.ToLower().Split(' ');
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Valid video extensions not found");
+                                    Logger.Log("Valid video extensions not found", MessageType.General);
+                                }
+                                break;
+                            case "OutputExt":
+                                if (data != "")
+                                {
+                                    this._outputExt = data;
+                                }
+                                break;
+                            case "ExtraArgs":
+                                if (data != "")
+                                {
+                                    this._extraArgs = data;
+                                }
+                                break;
+                            default:
+                                Logger.Log(String.Format("Invalid setting: {0}", l), MessageType.General);
+                                break;
                         }
                     }
                 }

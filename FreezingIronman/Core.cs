@@ -81,8 +81,15 @@ namespace FreezingIronman
                         v.CreateOutputPath();
                         var input = String.Format("-i \"{0}\" ", v.InputFullName);
                         var output = String.Format("-o \"{0}\" ", v.FullOutputName);
-                        var preset = String.Format("-Z \"{0}\"", settings.Preset);
-                        var convertString = String.Format(" {0} {1} {2}", input, output, preset);
+                        string convertString;
+                        if(settings.ExtraArgs != ""){
+                            var extra = String.Format(settings.ExtraArgs);
+                            convertString = String.Format(" {0} {1} {2}", input, output, extra);
+                        }
+                        else{
+                            var preset = String.Format("-Z \"{0}\"", settings.Preset);
+                            convertString = String.Format(" {0} {1} {2}", input, output, preset);
+                        }
                         var p = new Process();
                         p.StartInfo = new ProcessStartInfo(settings.HandBrakeLocation, convertString)
                         {

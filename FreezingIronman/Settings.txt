@@ -25,3 +25,5 @@ Recursive=
 Extensions=
 # Extension that will be applied on output. mkv or m4v, m4v by default.
 OutputExt=
+# Extra Arguments to be supplied
+ExtraArgs=
