@@ -20,7 +20,7 @@ namespace FreezingIronman
         }
 
         //Should have default
-        private string _logfile;
+        private string _logfile = "FreezingIronmanlog.txt";
         public string Logfile
         {
             get
@@ -236,7 +236,35 @@ namespace FreezingIronman
 
         void ValidateSettings()
         {
+            var endProgram = false;
+            if (OutputDirectory == string.Empty)
+            {
+                endProgram = true;
+                Logger.Log("Output directory not set", MessageType.Error);
+            }
+            if (InputDirectory == string.Empty)
+            {
+                endProgram = true;
+                Logger.Log("Input directory not set", MessageType.Error);
+            }
+            if (Extensions.Count() == 0 || Extensions == null)
+            {
+                endProgram = true;
+                Logger.Log("No extensions set", MessageType.Error);
+            }
+            if (HandBrakeLocation == string.Empty)
+            {
+                endProgram = true;
+                Logger.Log("Handbrake Location not set", MessageType.Error);
+            }
 
+            if (endProgram)
+            {
+                Logger.Log("Incorrect settings, killed program", MessageType.General);
+                Console.WriteLine("Incorrect settings, hit enter to end program");
+                Console.ReadLine();
+                System.Environment.Exit(0);
+            }
         }
 
         //Creates the settings file if its not found
@@ -268,7 +296,9 @@ Recursive=
 # ex. Extensions=.mp4 .m4v .mkv .mpg
 Extensions=
 # Extension that will be applied on output. mkv or m4v, m4v by default.
-OutputExt=", Encoding.UTF8);
+OutputExt=
+# Extra arguments
+ExtraArgs=", Encoding.UTF8);
             Logger.Log("Created Settings.txt template", MessageType.General);
         }
     }

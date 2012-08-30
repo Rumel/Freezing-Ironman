@@ -68,16 +68,20 @@ namespace FreezingIronman
                 var converted = 0;
                 //Removes already converted videos from the list
                 videos = RemoveFinished(videos);
+                Logger.Log(String.Format("Found {0} video(s)"), MessageType.General);
                 totalVideos += videos.Count;
                 if (settings.Optimize == true)
                 {
                     videos = videos.OrderBy(x => x.InputSize).ToList();
+                    Logger.Log("Optimized list", MessageType.General);
                 }
 
                 foreach (var v in videos)
                 {
                     if (!v.AlreadyConverted())
                     {
+                        Logger.Log("Starting conversion", MessageType.General);
+                        Console.Title = String.Format("Freezing Ironman {0}/{1}", totalConverted, totalVideos);
                         v.CreateOutputPath();
                         var input = String.Format("-i \"{0}\" ", v.InputFullName);
                         var output = String.Format("-o \"{0}\" ", v.FullOutputName);
@@ -97,10 +101,10 @@ namespace FreezingIronman
                         };
                         p.Start();
                         p.WaitForExit();
+                        Logger.Log("Finished Video", MessageType.General);
                         Logger.LogVideo(p, v);
                         converted++;
                         totalConverted++;
-                        Console.Title = String.Format("Freezing Ironman {0}/{1}", totalConverted, totalVideos);
                     }
                 }
 
@@ -117,6 +121,7 @@ namespace FreezingIronman
                 }
             }
             Logger.EncodingFinished(totalConverted);
+            Console.Title = String.Format("Freezing Ironman {0}/{1}", totalConverted, totalVideos);
         }
 
         static bool IsVideoFile(FileInfo f)
