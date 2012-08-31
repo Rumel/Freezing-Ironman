@@ -68,7 +68,7 @@ namespace FreezingIronman
                 var converted = 0;
                 //Removes already converted videos from the list
                 videos = RemoveFinished(videos);
-                Logger.Log(String.Format("Found {0} video(s)"), MessageType.General);
+                Logger.Log(String.Format("Found {0} video(s)", videos.Count), MessageType.General);
                 totalVideos += videos.Count;
                 if (settings.Optimize == true)
                 {
