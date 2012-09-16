@@ -67,11 +67,19 @@ namespace FreezingIronman
 
         private string HumanReadeable(long bytes)
         {
-            string[] suf = { "B", "KB", "MB", "GB", "TB", "PB" };
-            int place = Convert.ToInt32(Math.Floor(Math.Log(bytes, 1024)));
-            double num = Math.Round(bytes / Math.Pow(1024, place), 1);
-            var readable = String.Format("{0:#0.0} {1}", num, suf[place]);
-            return readable;
+            if (bytes != 0)
+            {
+                string[] suf = { "B", "KB", "MB", "GB", "TB", "PB" };
+                int place = Convert.ToInt32(Math.Floor(Math.Log(bytes, 1024)));
+                double num = Math.Round(bytes / Math.Pow(1024, place), 1);
+                var readable = String.Format("{0:#0.0} {1}", num, suf[place]);
+                return readable;
+            }
+            else
+            {
+                Logger.Log(String.Format("The conversion of {0} seems to have gone wrong", this.InputFullName), MessageType.Error);
+                return "NaN";
+            }
         }
 
         public string OutputPath

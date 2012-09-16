@@ -22,12 +22,12 @@ namespace FreezingIronman
         {
             if (type == MessageType.Error)
             {
-                var s = String.Format("ERROR {0:MM/dd/yy hh:mm:ss tt} {1}\r\n", System.DateTime.Now.ToString(), message);
+                var s = String.Format("ERROR {0:MM/dd/yy hh:mm:ss tt} {1}\r\n", System.DateTime.Now, message);
                 File.AppendAllText(LOG, s);
             }
             else
             {
-                var s = String.Format("{0:MM/dd/yy hh:mm:ss tt} {1}\r\n", System.DateTime.Now.ToString(), message);
+                var s = String.Format("{0:MM/dd/yy hh:mm:ss tt} {1}\r\n", System.DateTime.Now, message);
                 File.AppendAllText(LOG, s);
             }
         }
