@@ -119,6 +119,20 @@ namespace FreezingIronman
             }
         }
 
+        //Write Encoded File
+        private bool _writeEncoded = false;
+        public bool WriteEncoded
+        {
+            get
+            {
+                return this._writeEncoded;
+            }
+            set
+            {
+                this._writeEncoded = value;
+            }
+        }
+
         public Settings()
         {
             try
@@ -218,6 +232,14 @@ namespace FreezingIronman
                                     this._extraArgs = data;
                                 }
                                 break;
+
+                            case "WriteEncoded":
+                                {
+                                    if(data.ToLower() == "true"){
+                                        this._writeEncoded = true;
+                                    }
+                                }
+                                break;
                             default:
                                 Logger.Log(String.Format("Invalid setting: {0}", l), MessageType.General);
                                 break;
@@ -298,7 +320,10 @@ Extensions=
 # Extension that will be applied on output. mkv or m4v, m4v by default.
 OutputExt=
 # Extra arguments
-ExtraArgs=", Encoding.UTF8);
+ExtraArgs=
+# A file called Encoded.txt, I use it in my library so I know what needs to be converted
+# Defaults to false
+WriteEncoded=", Encoding.UTF8);
             Logger.Log("Created Settings.txt template", MessageType.General);
         }
     }

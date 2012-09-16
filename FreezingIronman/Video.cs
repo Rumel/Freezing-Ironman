@@ -77,6 +77,8 @@ namespace FreezingIronman
             }
             else
             {
+                var fileName = String.Format("{0}\\ERROR.txt", this.OutputPath);
+                File.WriteAllText(fileName, "ERRORED", Encoding.UTF8);
                 Logger.Log(String.Format("The conversion of {0} seems to have gone wrong", this.InputFullName), MessageType.Error);
                 return "NaN";
             }

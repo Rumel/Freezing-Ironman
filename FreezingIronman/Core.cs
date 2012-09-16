@@ -103,6 +103,7 @@ namespace FreezingIronman
                         p.WaitForExit();
                         Logger.Log("Finished Video", MessageType.General);
                         Logger.LogVideo(p, v);
+                        WriteEncodedFile(v, p);
                         converted++;
                         totalConverted++;
                     }
@@ -140,7 +141,8 @@ namespace FreezingIronman
         {
             List<Video> toRemove = new List<Video>();
             foreach(var v in vids){
-                if (File.Exists(v.FullOutputName))
+                var errorFile = String.Format("{0}\\ERROR.txt", v.OutputPath);
+                if (File.Exists(v.FullOutputName) || File.Exists(errorFile))
                 {
                     toRemove.Add(v);
                 }
@@ -153,6 +155,18 @@ namespace FreezingIronman
             }
 
             return vids;
+        }
+
+        static void WriteEncodedFile(Video v, Process p)
+        {
+            if (settings.WriteEncoded == true)
+            {
+                var elapsed = p.ExitTime - p.StartTime;
+                var elapsedTime = String.Format("{0:00}.{1:00}.{2:00}", elapsed.Hours, elapsed.Minutes, elapsed.Seconds);
+                var outputFile = String.Format("{0}\\Encoded.txt", v.OutputPath);
+                var data = String.Format("{0}\nInput Size {1}\nOutput Size{2}\nEncoding Time{3}\nEncode Date {4:MM/dd/yy  hh:mm:ss tt}", v.FullOutputName, v.InputSizeHuman, v.OutputSizeHuman, elapsedTime, DateTime.Now);
+                File.WriteAllText(outputFile, data, Encoding.UTF8);
+            }
         }
     }
 }

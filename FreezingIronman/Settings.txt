@@ -27,3 +27,6 @@ Extensions=
 OutputExt=
 # Extra Arguments to be supplied
 ExtraArgs=
+# A file called Encoded.txt, I use it in my library so I know what needs to be converted
+# Defaults to false
+WriteEncoded=
