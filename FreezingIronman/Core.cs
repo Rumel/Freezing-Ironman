@@ -102,8 +102,19 @@ namespace FreezingIronman
                         p.Start();
                         p.WaitForExit();
                         Logger.Log("Finished Video", MessageType.General);
-                        Logger.LogVideo(p, v);
-                        WriteEncodedFile(v, p);
+                        if(p.ExitCode == 0)
+                        {
+                            Logger.LogVideo(p, v);
+                            WriteEncodedFile(v, p);
+                        }
+                        else
+                        {
+                            var sw = File.AppendText("corrupt.txt");
+                            sw.Write(DateTime.Now.ToShortDateString() + " couldn't convert " + v.InputFullName +"\n");
+                            sw.Close();
+                            // Remove bad file
+                            File.Delete(v.InputFullName);
+                        }
                         converted++;
                         totalConverted++;
                     }
